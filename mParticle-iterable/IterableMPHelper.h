@@ -9,7 +9,7 @@
 #ifndef IterableMPHelper_h
 #define IterableMPHelper_h
 
-typedef void (^ITEActionBlock)(NSString *);
+typedef void (^ITEActionBlock)(NSString *_Nullable);
 
 #define ITBL_DEEPLINK_IDENTIFIER @"/a/[a-zA-Z0-9]+"
 
@@ -31,7 +31,8 @@ extern NSString * _Nonnull const IterableClickedURLKey;
  @param callbackBlock   the callback to send after the webpageURL is called
  
  @discussion            passes the string of the redirected URL to the callback
- */+(void) getAndTrackDeeplink:(NSURL *)webpageURL callbackBlock:(ITEActionBlock)callbackBlock;
+ */
++(void) getAndTrackDeeplink:(NSURL *_Nullable)webpageURL callbackBlock:(ITEActionBlock _Nonnull )callbackBlock;
 
 @end
 
