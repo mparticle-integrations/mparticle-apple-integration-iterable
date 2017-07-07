@@ -32,10 +32,21 @@ extern NSString * _Nonnull const IterableClickedURLKey;
  
  @discussion            passes the string of the redirected URL to the callback
  */
-+(void) getAndTrackDeeplink:(NSURL *_Nullable)webpageURL callbackBlock:(ITEActionBlock _Nonnull )callbackBlock;
++(void) getAndTrackDeeplink:(NSURL *_Nonnull)webpageURL callbackBlock:(ITEActionBlock _Nonnull )callbackBlock;
+
+/*!
+ @method
+ 
+ @abstract Checks for iterable URLs
+ 
+ @param webpageURL      the URL that was clicked
+ 
+ @return if the url is from iterable
+ */
++(BOOL) isIterableDeeplink:(NSURL *_Nonnull)webpageURL;
 
 @end
 
-#endif 
+#endif
 
 /* IterableMPHelper_h */
