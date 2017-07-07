@@ -15,12 +15,12 @@ Please refer to installation instructions in the core mParticle Apple SDK [READM
 
 Call the mParticle SDK `checkForDeferredDeepLinkWithCompletionHandler:` method to retrieve the respective information.
 
-The completionHandler will get passed the linkInfo dictionary with the following data. Use the destinationURL to navigate to your desired location within the app.
+The completionHandler will get passed the linkInfo dictionary with the following data. Use the `IterableDestinationURLKey` to navigate to your desired location within the app.
 
 ```json
 {
-	"destinationURL" : <the destination url>,
-	"clickedURL", <the clicked url>
+	"IterableDestinationURLKey" : "<the destination url>",
+	"IterableClickedURLKey" : "<the clicked url>"
 }
 
 ```
