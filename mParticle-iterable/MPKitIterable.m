@@ -90,7 +90,12 @@
     
     getAndTrackParams = nil;
     ITEActionBlock callbackBlock = ^(NSString* destinationURL) {
-        getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: destinationURL, IterableDestinationURLKey, clickedURL, IterableClickedURLKey, nil];
+        NSString *clickedUrlString = clickedURL.absoluteString;
+        if (!destinationURL || [clickedUrlString isEqualToString:destinationURL]) {
+            getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: clickedUrlString, IterableClickedURLKey, nil];
+        } else {
+            getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: destinationURL, IterableDestinationURLKey, clickedUrlString, IterableClickedURLKey, nil];
+        }
         if (completionHandlerCopy) {
             completionHandlerCopy(getAndTrackParams, nil);
             completionHandlerCopy = nil;
