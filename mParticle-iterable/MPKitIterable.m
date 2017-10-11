@@ -18,14 +18,9 @@
 
 #import "MPKitIterable.h"
 
-@interface MPKitIterable() {
-    NSDictionary *getAndTrackParams;
-    void (^completionHandlerCopy)(NSDictionary *, NSError *);
-}
-
-@end
-
 @implementation MPKitIterable
+
+@synthesize kitApi = _kitApi;
 
 + (NSNumber *)kitCode {
     return @1003;
@@ -68,34 +63,18 @@
 }
 
 #pragma mark Application
-- (MPKitExecStatus *)checkForDeferredDeepLinkWithCompletionHandler:(void(^)(NSDictionary *linkInfo, NSError *error))completionHandler {
-    
-    if (_started && (getAndTrackParams)) {
-        completionHandler(getAndTrackParams, nil);
-        getAndTrackParams = nil;
-    } else {
-        completionHandlerCopy = [completionHandler copy];
-    }
-    
-    MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[MPKitIterable kitCode] returnCode:MPKitReturnCodeSuccess];
-    return execStatus;
-}
-
 - (nonnull MPKitExecStatus *)continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(void(^ _Nonnull)(NSArray * _Nullable restorableObjects))restorationHandler {
     NSURL *clickedURL = userActivity.webpageURL;
     
-    getAndTrackParams = nil;
     ITEActionBlock callbackBlock = ^(NSString* destinationURL) {
+        NSDictionary *getAndTrackParams = nil;
         NSString *clickedUrlString = clickedURL.absoluteString;
         if (!destinationURL || [clickedUrlString isEqualToString:destinationURL]) {
             getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: clickedUrlString, IterableClickedURLKey, nil];
         } else {
             getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: destinationURL, IterableDestinationURLKey, clickedUrlString, IterableClickedURLKey, nil];
         }
-        if (completionHandlerCopy) {
-            completionHandlerCopy(getAndTrackParams, nil);
-            completionHandlerCopy = nil;
-        }
+        [_kitApi onDeeplinkCompleteWithInfo:getAndTrackParams error:nil];
     };
     [IterableAPI getAndTrackDeeplink:clickedURL callbackBlock:callbackBlock];
     
