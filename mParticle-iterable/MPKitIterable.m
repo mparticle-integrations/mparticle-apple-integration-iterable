@@ -50,7 +50,7 @@
     
     dispatch_once(&kitPredicate, ^{
         
-        _started = YES;
+        self->_started = YES;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             NSDictionary *userInfo = @{mParticleKitInstanceKey:[[self class] kitCode]};
@@ -78,7 +78,7 @@
         MPAttributionResult *attributionResult = [[MPAttributionResult alloc] init];
         attributionResult.linkInfo = getAndTrackParams;
 
-        [_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
+        [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
     };
     [IterableAPI getAndTrackDeeplink:clickedURL callbackBlock:callbackBlock];
     
