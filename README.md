@@ -1,15 +1,27 @@
-# mParticle Apple Kit Library
+## Iterable Kit Integration
 
-A kit is an extension to the core [mParticle Apple SDK](https://github.com/mParticle/mparticle-apple-sdk). A kit works as a bridge between the mParticle SDK and a partner SDK. It abstracts the implementation complexity, simplifying the implementation for developers.
+This repository contains the [Iterable](https://iterable.com) integration for the [mParticle Apple SDK](https://github.com/mParticle/mparticle-apple-sdk).
 
-A kit takes care of initializing and forwarding information depending on what you've configured in [your app's dashboard](https://app.mparticle.com), so you just have to decide which kits you may use prior to submission to the App Store. You can easily include all of the kits, none of the kits, or individual kits – the choice is yours.
+### Adding the integration
 
-[![CocoaPods compatible](http://img.shields.io/badge/CocoaPods-compatible-brightgreen.png)](https://cocoapods.org/?q=mparticle)
+1. Add the kit dependency to your app's Podfile or Cartfile:
 
+    ```
+    pod 'mParticle-Iterable', '~> 7.0'
+    ```
 
-## Installation
+    OR
 
-Please refer to installation instructions in the core mParticle Apple SDK [README](https://github.com/mParticle/mparticle-apple-sdk#get-the-sdk), or check out our [SDK Documentation](http://docs.mparticle.com/#mobile-sdk-guide) site to learn more.
+    ```
+    github 'mparticle-integrations/mparticle-apple-integration-iterable' ~> 7.0
+    ```
+
+2. Follow the mParticle iOS SDK [quick-start](https://github.com/mParticle/mparticle-apple-sdk), then rebuild and launch your app, and verify that you see `"Included kits: { Iterable }"` in your Xcode console 
+
+> (This requires your mParticle log level to be at least Debug)
+
+3. Reference mParticle's integration docs below to enable the integration.
+
 
 ## Deep-linking
 
@@ -43,11 +55,10 @@ A copy of your block will be passed an attributionResult containing a linkInfo d
 
 ```
 
-## Support
+### Documentation
 
-Questions? Give us a shout at <support@mparticle.com>
+[Iterable integration](https://docs.mparticle.com/integrations/iterable/event/)
 
+### License
 
-## License
-
-This mParticle Apple Kit is available under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See the LICENSE file for more info.
+[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
