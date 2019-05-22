@@ -56,10 +56,10 @@
         } else {
             getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: destinationURL, IterableDestinationURLKey, clickedUrlString, IterableClickedURLKey, nil];
         }
-
+        
         MPAttributionResult *attributionResult = [[MPAttributionResult alloc] init];
         attributionResult.linkInfo = getAndTrackParams;
-
+        
         [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
     };
     [IterableAPI getAndTrackDeeplink:clickedURL callbackBlock:callbackBlock];
