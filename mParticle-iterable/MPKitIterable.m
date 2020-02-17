@@ -1,4 +1,5 @@
 #import "MPKitIterable.h"
+@import IterableSDK;
 
 @implementation MPKitIterable
 
@@ -32,6 +33,16 @@
     
     dispatch_once(&kitPredicate, ^{
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onUserIdentified:) name:mParticleIdentityStateChangeListenerNotification object:nil];
+        
+        NSString *apiKey = self.configuration[@"apiKey"];
+        NSString *apnsProdIntegrationName = self.configuration[@"apnsProdIntegrationName"];
+        NSString *apnsSandboxIntegrationName = self.configuration[@"apnsSandboxIntegrationName"];
+        IterableConfig *config = [[IterableConfig alloc] init];
+        config.pushIntegrationName = apnsProdIntegrationName;
+        config.sandboxPushIntegrationName = apnsSandboxIntegrationName;
+        [IterableAPI initializeWithApiKey:apiKey config:config];
+        
         self->_started = YES;
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -47,6 +58,8 @@
 #pragma mark Application
 - (nonnull MPKitExecStatus *)continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(void(^ _Nonnull)(NSArray * _Nullable restorableObjects))restorationHandler {
     NSURL *clickedURL = userActivity.webpageURL;
+
+    typedef void (^ITEActionBlock)(NSString *);
     
     ITEActionBlock callbackBlock = ^(NSString* destinationURL) {
         NSDictionary *getAndTrackParams = nil;
@@ -62,10 +75,75 @@
         
         [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
     };
+
     [IterableAPI getAndTrackDeeplink:clickedURL callbackBlock:callbackBlock];
-    
+
     MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[MPKitIterable kitCode] returnCode:MPKitReturnCodeSuccess];
     return execStatus;
+}
+
+
+- (MPKitExecStatus *)onUserIdentified:(NSNotification*) notification {
+    FilteredMParticleUser *user = [self currentUser];
+    [self updateIdentity:user];
+    return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
+}
+
+- (NSString *)getUserEmail:(FilteredMParticleUser *)user {
+    return user.userIdentities[@(MPUserIdentityEmail)];
+}
+
+- (NSString *)getUserId:(FilteredMParticleUser *)user {
+    return user.userIdentities[@(MPUserIdentityCustomerId)];
+}
+
+- (MPKitExecStatus *)onLoginComplete:(FilteredMParticleUser *)user request:(FilteredMPIdentityApiRequest *)request {
+    [self updateIdentity:user];
+    return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
+}
+
+- (nonnull MPKitExecStatus *)onLogoutComplete:(nonnull FilteredMParticleUser *)user request:(nonnull FilteredMPIdentityApiRequest *)request {
+    [self updateIdentity:user];
+    return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
+}
+
+- (MPKitExecStatus *)onIdentifyComplete:(FilteredMParticleUser *)user request:(FilteredMPIdentityApiRequest *)request {
+    [self updateIdentity:user];
+    return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
+}
+
+- (void)updateIdentity:(FilteredMParticleUser *)user {
+    NSString *email = [self getUserEmail:user];
+    NSString *userId = [self getUserId:user];
+    if (email != nil && email.length > 0) {
+        [IterableAPI setEmail:email];
+    } else if (userId != nil && userId.length > 0) {
+        [IterableAPI setUserId:userId];
+    } else {
+        // No identifier, log out
+        [IterableAPI setEmail:nil];
+    }
+}
+
+- (FilteredMParticleUser *)currentUser {
+    return [[self kitApi] getCurrentUserWithKit:self];
+}
+
+- (MPKitExecStatus *)setDeviceToken:(NSData *)deviceToken {
+    [IterableAPI registerToken:deviceToken];
+    return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
+}
+
+#if TARGET_OS_IOS == 1 && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+- (MPKitExecStatus *)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response API_AVAILABLE(ios(10.0)) {
+    [IterableAppIntegration userNotificationCenter:center didReceiveNotificationResponse:response withCompletionHandler:^{}];
+    return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
+}
+#endif
+ 
+- (MPKitExecStatus *)receivedUserNotification:(NSDictionary *)userInfo {
+    [IterableAppIntegration application:UIApplication.sharedApplication didReceiveRemoteNotification:userInfo fetchCompletionHandler:^(UIBackgroundFetchResult result){}];
+    return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
 }
 
 @end
