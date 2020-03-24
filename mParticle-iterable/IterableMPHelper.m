@@ -11,5 +11,3 @@
 
 NSString *const IterableDestinationURLKey = @"IterableDestinationURLKey";
 NSString *const IterableClickedURLKey = @"IterableClickedURLKey";
-
-@end
