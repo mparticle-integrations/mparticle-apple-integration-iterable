@@ -38,11 +38,15 @@
         NSString *apiKey = self.configuration[@"apiKey"];
         NSString *apnsProdIntegrationName = self.configuration[@"apnsProdIntegrationName"];
         NSString *apnsSandboxIntegrationName = self.configuration[@"apnsSandboxIntegrationName"];
+        NSString *userIdField = self.configuration[@"userIdField"];
+        self.mpidEnabled = [userIdField isEqualToString:@"mpid"];
+
         IterableConfig *config = [[IterableConfig alloc] init];
         config.pushIntegrationName = apnsProdIntegrationName;
         config.sandboxPushIntegrationName = apnsSandboxIntegrationName;
         [IterableAPI initializeWithApiKey:apiKey config:config];
-        
+        [self initIntegrationAttributes];
+
         self->_started = YES;
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -82,6 +86,13 @@
     return execStatus;
 }
 
+- (void)initIntegrationAttributes {
+    NSDictionary *integrationAttributes = @{
+            @"Iterable.sdkVersion": IterableAPI.sdkVersion
+    };
+    [[MParticle sharedInstance] setIntegrationAttributes:integrationAttributes forKit:MPKitIterable.kitCode];
+}
+
 
 - (MPKitExecStatus *)onUserIdentified:(NSNotification*) notification {
     FilteredMParticleUser *user = [self currentUser];
@@ -117,8 +128,10 @@
     NSString *userId = [self getUserId:user];
     if (email != nil && email.length > 0) {
         [IterableAPI setEmail:email];
-    } else if (userId != nil && userId.length > 0) {
+    } else if (!self.mpidEnabled && userId != nil && userId.length > 0) {
         [IterableAPI setUserId:userId];
+    } else if (self.mpidEnabled && user.userId.integerValue > 0) {
+        [IterableAPI setEmail:[NSString stringWithFormat:@"%li@placeholder.email", user.userId.longValue]];
     } else {
         // No identifier, log out
         [IterableAPI setEmail:nil];
