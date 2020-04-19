@@ -1,4 +1,6 @@
 #import "MPKitIterable.h"
+#import <objc/runtime.h>
+#import <objc/message.h>
 @import IterableSDK;
 
 @implementation MPKitIterable
@@ -104,7 +106,7 @@
     return user.userIdentities[@(MPUserIdentityEmail)];
 }
 
-- (NSString *)getUserId:(FilteredMParticleUser *)user {
+- (NSString *)getCustomerId:(FilteredMParticleUser *)user {
     return user.userIdentities[@(MPUserIdentityCustomerId)];
 }
 
@@ -123,15 +125,43 @@
     return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
 }
 
+- (NSString *)getPlaceholderEmail:(FilteredMParticleUser *)user {
+    NSString *id = nil;
+    if (self.mpidEnabled) {
+        if (user.userId.longValue != 0) {
+            id = user.userId.stringValue;
+        }
+    } else {
+        id = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+
+        if (!id.length) {
+            id = [self advertiserId];
+        }
+
+        if (!id.length) {
+            id = [self getCustomerId:user];
+        }
+
+        if (!id.length) {
+            id = [[[MParticle sharedInstance] identity] deviceApplicationStamp];
+        }
+    }
+
+    if (id.length > 0) {
+        return [NSString stringWithFormat:@"%@@placeholder.email", id];
+    } else {
+        return nil;
+    }
+}
+
 - (void)updateIdentity:(FilteredMParticleUser *)user {
     NSString *email = [self getUserEmail:user];
-    NSString *userId = [self getUserId:user];
+    NSString *placeholderEmail = [self getPlaceholderEmail:user];
+
     if (email != nil && email.length > 0) {
         [IterableAPI setEmail:email];
-    } else if (!self.mpidEnabled && userId != nil && userId.length > 0) {
-        [IterableAPI setUserId:userId];
-    } else if (self.mpidEnabled && user.userId.integerValue > 0) {
-        [IterableAPI setEmail:[NSString stringWithFormat:@"%li@placeholder.email", user.userId.longValue]];
+    } else if (placeholderEmail != nil && placeholderEmail.length > 0) {
+        [IterableAPI setEmail:placeholderEmail];
     } else {
         // No identifier, log out
         [IterableAPI setEmail:nil];
@@ -157,6 +187,31 @@
 - (MPKitExecStatus *)receivedUserNotification:(NSDictionary *)userInfo {
     [IterableAppIntegration application:UIApplication.sharedApplication didReceiveRemoteNotification:userInfo fetchCompletionHandler:^(UIBackgroundFetchResult result){}];
     return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
+}
+
+#pragma mark Accessors
+- (NSString *)advertiserId {
+    NSString *advertiserId = nil;
+    Class MPIdentifierManager = NSClassFromString(@"ASIdentifierManager");
+    if (MPIdentifierManager) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        SEL selector = NSSelectorFromString(@"sharedManager");
+        id<NSObject> adIdentityManager = [MPIdentifierManager performSelector:selector];
+
+        selector = NSSelectorFromString(@"isAdvertisingTrackingEnabled");
+        BOOL advertisingTrackingEnabled = ((BOOL (*)(id, SEL))objc_msgSend)(adIdentityManager, selector);
+        if (advertisingTrackingEnabled) {
+            selector = NSSelectorFromString(@"advertisingIdentifier");
+            advertiserId = [[adIdentityManager performSelector:selector] UUIDString];
+        }
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+    }
+
+    return advertiserId;
 }
 
 @end
