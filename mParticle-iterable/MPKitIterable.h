@@ -7,6 +7,8 @@
 
 #import "IterableMPHelper.h"
 
+@class IterableConfig;
+
 @interface MPKitIterable : NSObject <MPKitProtocol>
 
 @property (nonatomic, strong, nonnull) NSDictionary *configuration;
@@ -15,5 +17,11 @@
 @property (nonatomic, strong, nullable) NSDictionary<NSString *, id> *userAttributes;
 @property (nonatomic, strong, nullable) NSArray<NSDictionary<NSString *, id> *> *userIdentities;
 @property (nonatomic, readwrite) BOOL mpidEnabled;
+
+/**
+ * Set a custom config to be used when initializing Iterable SDK
+ * @param config `IterableConfig` instance with configuration data for Iterable SDK
+ */
++ (void)setCustomConfig:(IterableConfig *_Nullable)config;
 
 @end

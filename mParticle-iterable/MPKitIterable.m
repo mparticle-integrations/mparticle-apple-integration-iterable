@@ -6,6 +6,7 @@
 @implementation MPKitIterable
 
 @synthesize kitApi = _kitApi;
+static IterableConfig *_customConfig = nil;
 
 + (NSNumber *)kitCode {
     return @1003;
@@ -14,6 +15,10 @@
 + (void)load {
     MPKitRegister *kitRegister = [[MPKitRegister alloc] initWithName:@"Iterable" className:@"MPKitIterable"];
     [MParticle registerExtension:kitRegister];
+}
+
++ (void)setCustomConfig:(IterableConfig *_Nullable)config {
+    _customConfig = config;
 }
 
 #pragma mark - MPKitInstanceProtocol methods
@@ -43,7 +48,10 @@
         NSString *userIdField = self.configuration[@"userIdField"];
         self.mpidEnabled = [userIdField isEqualToString:@"mpid"];
 
-        IterableConfig *config = [[IterableConfig alloc] init];
+        IterableConfig *config = _customConfig;
+        if (!config) {
+            config = [[IterableConfig alloc] init];
+        }
         config.pushIntegrationName = apnsProdIntegrationName;
         config.sandboxPushIntegrationName = apnsSandboxIntegrationName;
         [IterableAPI initializeWithApiKey:apiKey config:config];
