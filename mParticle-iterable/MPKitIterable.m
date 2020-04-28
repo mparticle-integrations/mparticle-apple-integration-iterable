@@ -40,8 +40,6 @@ static IterableConfig *_customConfig = nil;
     
     dispatch_once(&kitPredicate, ^{
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onUserIdentified:) name:mParticleIdentityStateChangeListenerNotification object:nil];
-        
         NSString *apiKey = self.configuration[@"apiKey"];
         NSString *apnsProdIntegrationName = self.configuration[@"apnsProdIntegrationName"];
         NSString *apnsSandboxIntegrationName = self.configuration[@"apnsSandboxIntegrationName"];
@@ -101,13 +99,6 @@ static IterableConfig *_customConfig = nil;
             @"Iterable.sdkVersion": IterableAPI.sdkVersion
     };
     [[MParticle sharedInstance] setIntegrationAttributes:integrationAttributes forKit:MPKitIterable.kitCode];
-}
-
-
-- (MPKitExecStatus *)onUserIdentified:(NSNotification*) notification {
-    FilteredMParticleUser *user = [self currentUser];
-    [self updateIdentity:user];
-    return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
 }
 
 - (NSString *)getUserEmail:(FilteredMParticleUser *)user {
