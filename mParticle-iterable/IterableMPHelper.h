@@ -11,41 +11,9 @@
 
 typedef void (^ITEActionBlock)(NSString *_Nullable);
 
-#define ITBL_DEEPLINK_IDENTIFIER @"/a/[a-zA-Z0-9]+"
-
 // Keys in the linkInfo passed to the onAttributionComplete handler
 extern NSString * _Nonnull const IterableDestinationURLKey;
 extern NSString * _Nonnull const IterableClickedURLKey;
-
-/**
- `IterableAPI` contains all the essential functions for communicating with Iterable's API
- */
-@interface IterableAPI : NSObject
-
-/*!
- @method
- 
- @abstract tracks a link click and passes the redirected URL to the callback
- 
- @param webpageURL      the URL that was clicked
- @param callbackBlock   the callback to send after the webpageURL is called
- 
- @discussion            passes the string of the redirected URL to the callback
- */
-+(void) getAndTrackDeeplink:(NSURL *_Nonnull)webpageURL callbackBlock:(ITEActionBlock _Nonnull )callbackBlock;
-
-/*!
- @method
- 
- @abstract Checks for iterable URLs
- 
- @param webpageURL      the URL that was clicked
- 
- @return if the url is from iterable
- */
-+(BOOL) isIterableDeeplink:(NSURL *_Nonnull)webpageURL;
-
-@end
 
 #endif
 
