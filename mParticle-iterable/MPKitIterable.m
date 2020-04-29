@@ -131,10 +131,10 @@ static IterableConfig *_customConfig = nil;
             id = user.userId.stringValue;
         }
     } else {
-        id = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        id = [[[[UIDevice currentDevice] identifierForVendor] UUIDString] lowercaseString];
 
         if (!id.length) {
-            id = [self advertiserId];
+            id = [[self advertiserId] lowercaseString];
         }
 
         if (!id.length) {
