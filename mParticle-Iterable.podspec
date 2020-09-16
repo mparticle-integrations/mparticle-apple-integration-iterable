@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = "mParticle-Iterable"
-    s.version          = "8.0.0"
+    s.version          = "8.0.1"
     s.summary          = "Iterable integration for mParticle"
 
     s.description      = "This is the Iterable integration for mParticle."
@@ -13,6 +13,6 @@ Pod::Spec.new do |s|
 
     s.ios.deployment_target = "9.0"
     s.ios.source_files      = 'mParticle-Iterable/*.{h,m,mm}'
-    s.ios.dependency 'mParticle-Apple-SDK/mParticle', '~> 8.0-beta'
+    s.ios.dependency 'mParticle-Apple-SDK/mParticle', '~> 8.0'
     s.ios.dependency 'Iterable-iOS-SDK', '~> 6.2'
 end
