@@ -88,7 +88,9 @@ static IterableConfig *_customConfig = nil;
         [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
     };
 
-    [IterableAPI getAndTrackDeeplink:clickedURL callbackBlock:callbackBlock];
+    if (clickedURL != nil) {
+        [IterableAPI getAndTrackDeeplink:clickedURL callbackBlock:callbackBlock];
+    }
 
     MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[MPKitIterable kitCode] returnCode:MPKitReturnCodeSuccess];
     return execStatus;
