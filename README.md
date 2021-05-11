@@ -7,13 +7,13 @@ This repository contains the [Iterable](https://iterable.com) integration for th
 1. Add the kit dependency to your app's Podfile or Cartfile:
 
     ```
-    pod 'mParticle-Iterable', '~> 7.0'
+    pod 'mParticle-Iterable', '~> 8.0.2'
     ```
 
     OR
 
     ```
-    github "mparticle-integrations/mparticle-apple-integration-iterable" ~> 7.0
+    github "mparticle-integrations/mparticle-apple-integration-iterable" ~> 8.0.2
     ```
 
 2. Follow the mParticle iOS SDK [quick-start](https://github.com/mParticle/mparticle-apple-sdk), then rebuild and launch your app, and verify that you see `"Included kits: { Iterable }"` in your Xcode console 
