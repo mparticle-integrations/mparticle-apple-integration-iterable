@@ -89,7 +89,7 @@ static IterableConfig *_customConfig = nil;
     };
 
     if (clickedURL != nil) {
-        [IterableAPI getAndTrackDeeplink:clickedURL callbackBlock:callbackBlock];
+        [IterableAPI handleUniversalLink:clickedURL];
     }
 
     MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[MPKitIterable kitCode] returnCode:MPKitReturnCodeSuccess];
