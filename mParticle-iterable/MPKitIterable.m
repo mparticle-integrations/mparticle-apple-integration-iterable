@@ -3,10 +3,15 @@
 #import <objc/message.h>
 @import IterableSDK;
 
+
+@interface MPKitIterable() <IterableURLDelegate>
+@end
+
 @implementation MPKitIterable
 
 @synthesize kitApi = _kitApi;
 static IterableConfig *_customConfig = nil;
+static NSURL *_clickedURL = nil;
 
 + (NSNumber *)kitCode {
     return @1003;
@@ -19,6 +24,31 @@ static IterableConfig *_customConfig = nil;
 
 + (void)setCustomConfig:(IterableConfig *_Nullable)config {
     _customConfig = config;
+}
+
+- (BOOL)handleIterableURL:(NSURL *)url context:(IterableActionContext *)context {
+    BOOL result = YES;
+    if (_customConfig.urlDelegate != nil && [((NSObject *)_customConfig.urlDelegate) respondsToSelector:@selector(handleIterableURL:context:)]) {
+        result = [_customConfig.urlDelegate handleIterableURL:url context: context];
+    } else if (_customConfig.urlDelegate != nil) {
+        NSLog(@"mParticle -> Error: Iterable urlDelegate was set in custom config but didn't respond to the selector 'handleIterableURL:context:'");
+    }
+
+    NSString *destinationURL = url.absoluteString;
+    NSDictionary *getAndTrackParams = nil;
+    NSString *clickedUrlString = [NSString stringWithString:_clickedURL.absoluteString];
+    _clickedURL = nil;
+    if (!destinationURL || [clickedUrlString isEqualToString:destinationURL]) {
+        getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: clickedUrlString, IterableClickedURLKey, nil];
+    } else {
+        getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: destinationURL, IterableDestinationURLKey, clickedUrlString, IterableClickedURLKey, nil];
+    }
+    
+    MPAttributionResult *attributionResult = [[MPAttributionResult alloc] init];
+    attributionResult.linkInfo = getAndTrackParams;
+
+    [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
+    return true;
 }
 
 #pragma mark - MPKitInstanceProtocol methods
@@ -52,6 +82,8 @@ static IterableConfig *_customConfig = nil;
         }
         config.pushIntegrationName = apnsProdIntegrationName;
         config.sandboxPushIntegrationName = apnsSandboxIntegrationName;
+        config.urlDelegate = self;
+        
         [IterableAPI initializeWithApiKey:apiKey config:config];
         [self initIntegrationAttributes];
 
@@ -69,27 +101,10 @@ static IterableConfig *_customConfig = nil;
 
 #pragma mark Application
 - (nonnull MPKitExecStatus *)continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(void(^ _Nonnull)(NSArray * _Nullable restorableObjects))restorationHandler {
-    NSURL *clickedURL = userActivity.webpageURL;
+    _clickedURL = userActivity.webpageURL;
 
-    typedef void (^ITEActionBlock)(NSString *);
-    
-    ITEActionBlock callbackBlock = ^(NSString* destinationURL) {
-        NSDictionary *getAndTrackParams = nil;
-        NSString *clickedUrlString = clickedURL.absoluteString;
-        if (!destinationURL || [clickedUrlString isEqualToString:destinationURL]) {
-            getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: clickedUrlString, IterableClickedURLKey, nil];
-        } else {
-            getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: destinationURL, IterableDestinationURLKey, clickedUrlString, IterableClickedURLKey, nil];
-        }
-        
-        MPAttributionResult *attributionResult = [[MPAttributionResult alloc] init];
-        attributionResult.linkInfo = getAndTrackParams;
-        
-        [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
-    };
-
-    if (clickedURL != nil) {
-        [IterableAPI handleUniversalLink:clickedURL];
+    if (_clickedURL != nil) {
+        [IterableAPI handleUniversalLink:_clickedURL];
     }
 
     MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[MPKitIterable kitCode] returnCode:MPKitReturnCodeSuccess];
