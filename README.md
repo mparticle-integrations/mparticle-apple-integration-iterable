@@ -16,6 +16,8 @@ This repository contains the [Iterable](https://iterable.com) integration for th
     github "mparticle-integrations/mparticle-apple-integration-iterable" ~> 8.1.0
     ```
 
+    Carthage Note: Due to Carthage limitations with the Iterable SDK project, make sure to use the `--use-xcframeworks --no-use-binaries` flags when running `carthage update`.
+
 2. Follow the mParticle iOS SDK [quick-start](https://github.com/mParticle/mparticle-apple-sdk), then rebuild and launch your app, and verify that you see `"Included kits: { Iterable }"` in your Xcode console 
 
 > (This requires your mParticle log level to be at least Debug)
