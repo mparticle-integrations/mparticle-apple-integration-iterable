@@ -48,7 +48,7 @@ static NSURL *_clickedURL = nil;
     attributionResult.linkInfo = getAndTrackParams;
 
     [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
-    return true;
+    return result;
 }
 
 #pragma mark - MPKitInstanceProtocol methods
