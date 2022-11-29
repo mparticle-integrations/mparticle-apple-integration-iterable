@@ -36,7 +36,10 @@ static NSURL *_clickedURL = nil;
 
     NSString *destinationURL = url.absoluteString;
     NSDictionary *getAndTrackParams = nil;
-    NSString *clickedUrlString = [NSString stringWithString:_clickedURL.absoluteString];
+    NSString *clickedUrlString = _clickedURL.absoluteString;
+    if (clickedUrlString == nil) {
+        clickedUrlString = @"";
+    }
     _clickedURL = nil;
     if (!destinationURL || [clickedUrlString isEqualToString:destinationURL]) {
         getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: clickedUrlString, IterableClickedURLKey, nil];
