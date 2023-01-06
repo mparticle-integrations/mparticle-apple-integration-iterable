@@ -10,8 +10,9 @@
 @implementation MPKitIterable
 
 @synthesize kitApi = _kitApi;
-static IterableConfig *_customConfig = nil;
-static NSURL *_clickedURL = nil;
+static __strong IterableConfig *_customConfig = nil;
+static __strong id <IterableURLDelegate> _customUrlDelegate = nil;
+static __strong NSURL *_clickedURL = nil;
 
 + (NSNumber *)kitCode {
     return @1003;
@@ -24,13 +25,16 @@ static NSURL *_clickedURL = nil;
 
 + (void)setCustomConfig:(IterableConfig *_Nullable)config {
     _customConfig = config;
+    _customUrlDelegate = config.urlDelegate;
 }
 
 - (BOOL)handleIterableURL:(NSURL *)url context:(IterableActionContext *)context {
     BOOL result = YES;
-    if (_customConfig.urlDelegate != nil && [((NSObject *)_customConfig.urlDelegate) respondsToSelector:@selector(handleIterableURL:context:)]) {
-        result = [_customConfig.urlDelegate handleIterableURL:url context: context];
-    } else if (_customConfig.urlDelegate != nil) {
+    if (_customUrlDelegate == self) {
+        NSLog(@"mParticle -> Error: Iterable urlDelegate was set in custom config but points to the MKKitIterable instance. It should be a different object.");
+    } else if (_customUrlDelegate != nil && [((NSObject *)_customUrlDelegate) respondsToSelector:@selector(handleIterableURL:context:)]) {
+        result = [_customUrlDelegate handleIterableURL:url context: context];
+    } else if (_customUrlDelegate != nil) {
         NSLog(@"mParticle -> Error: Iterable urlDelegate was set in custom config but didn't respond to the selector 'handleIterableURL:context:'");
     }
 
