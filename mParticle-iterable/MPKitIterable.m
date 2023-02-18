@@ -10,9 +10,17 @@
 @implementation MPKitIterable
 
 @synthesize kitApi = _kitApi;
-static __strong IterableConfig *_customConfig = nil;
-static __strong id <IterableURLDelegate> _customUrlDelegate = nil;
-static __strong NSURL *_clickedURL = nil;
+static IterableConfig *_customConfig = nil;
+static NSURL *_clickedURL = nil;
+static BOOL *prefersUserId = FALSE;
+
++ (BOOL *)prefersUserId {
+    return prefersUserId;
+}
+
++ (void)setPrefersUserId:(BOOL)prefers {
+    prefersUserId = &prefers;
+}
 
 + (NSNumber *)kitCode {
     return @1003;
@@ -25,25 +33,19 @@ static __strong NSURL *_clickedURL = nil;
 
 + (void)setCustomConfig:(IterableConfig *_Nullable)config {
     _customConfig = config;
-    _customUrlDelegate = config.urlDelegate;
 }
 
 - (BOOL)handleIterableURL:(NSURL *)url context:(IterableActionContext *)context {
     BOOL result = YES;
-    if (_customUrlDelegate == self) {
-        NSLog(@"mParticle -> Error: Iterable urlDelegate was set in custom config but points to the MKKitIterable instance. It should be a different object.");
-    } else if (_customUrlDelegate != nil && [((NSObject *)_customUrlDelegate) respondsToSelector:@selector(handleIterableURL:context:)]) {
-        result = [_customUrlDelegate handleIterableURL:url context: context];
-    } else if (_customUrlDelegate != nil) {
+    if (_customConfig.urlDelegate != nil && [((NSObject *)_customConfig.urlDelegate) respondsToSelector:@selector(handleIterableURL:context:)]) {
+        result = [_customConfig.urlDelegate handleIterableURL:url context: context];
+    } else if (_customConfig.urlDelegate != nil) {
         NSLog(@"mParticle -> Error: Iterable urlDelegate was set in custom config but didn't respond to the selector 'handleIterableURL:context:'");
     }
 
     NSString *destinationURL = url.absoluteString;
     NSDictionary *getAndTrackParams = nil;
-    NSString *clickedUrlString = _clickedURL.absoluteString;
-    if (clickedUrlString == nil) {
-        clickedUrlString = @"";
-    }
+    NSString *clickedUrlString = [NSString stringWithString:_clickedURL.absoluteString];
     _clickedURL = nil;
     if (!destinationURL || [clickedUrlString isEqualToString:destinationURL]) {
         getAndTrackParams = [[NSDictionary alloc] initWithObjectsAndKeys: clickedUrlString, IterableClickedURLKey, nil];
@@ -55,7 +57,7 @@ static __strong NSURL *_clickedURL = nil;
     attributionResult.linkInfo = getAndTrackParams;
 
     [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
-    return result;
+    return true;
 }
 
 #pragma mark - MPKitInstanceProtocol methods
@@ -148,7 +150,15 @@ static __strong NSURL *_clickedURL = nil;
     return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
 }
 
-- (NSString *)getPlaceholderEmail:(FilteredMParticleUser *)user {
+- (NSString *)getPlaceholderEmail:(NSString *)userId {
+    if (userId.length > 0) {
+        return [NSString stringWithFormat:@"%@@placeholder.email", userId];
+    } else {
+        return nil;
+    }
+}
+
+- (NSString *)getUserId:(FilteredMParticleUser *)user {
     NSString *id = nil;
     if (self.mpidEnabled) {
         if (user.userId.longValue != 0) {
@@ -169,18 +179,20 @@ static __strong NSURL *_clickedURL = nil;
             id = [[[MParticle sharedInstance] identity] deviceApplicationStamp];
         }
     }
-
-    if (id.length > 0) {
-        return [NSString stringWithFormat:@"%@@placeholder.email", id];
-    } else {
-        return nil;
-    }
+    return id;
 }
 
 - (void)updateIdentity:(FilteredMParticleUser *)user {
+    NSString *userId = [self getUserId:user];
+    
+    if (prefersUserId) {
+        [IterableAPI setUserId:userId];
+        return;
+    }
+    
     NSString *email = [self getUserEmail:user];
-    NSString *placeholderEmail = [self getPlaceholderEmail:user];
-
+    NSString *placeholderEmail = [self getPlaceholderEmail:userId];
+    
     if (email != nil && email.length > 0) {
         [IterableAPI setEmail:email];
     } else if (placeholderEmail != nil && placeholderEmail.length > 0) {

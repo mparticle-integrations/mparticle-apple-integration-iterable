@@ -11,17 +11,25 @@
 
 @interface MPKitIterable : NSObject <MPKitProtocol>
 
+
 @property (nonatomic, strong, nonnull) NSDictionary *configuration;
 @property (nonatomic, strong, nullable) NSDictionary *launchOptions;
 @property (nonatomic, unsafe_unretained, readonly) BOOL started;
 @property (nonatomic, strong, nullable) NSDictionary<NSString *, id> *userAttributes;
 @property (nonatomic, strong, nullable) NSArray<NSDictionary<NSString *, id> *> *userIdentities;
 @property (nonatomic, readwrite) BOOL mpidEnabled;
+//@property (nonatomic, readwrite) MPKitPrefersUserId prefersUserId;
 
 /**
  * Set a custom config to be used when initializing Iterable SDK
  * @param config `IterableConfig` instance with configuration data for Iterable SDK
  */
 + (void)setCustomConfig:(IterableConfig *_Nullable)config;
+
+/**
+ * Declare whether or not to prefer user id in API calls to Iterable. If `TRUE`, the kit will not
+ * set an email or create a placeholder.email address
+ */
++ (void)setPrefersUserId:(BOOL)prefers;
 
 @end
