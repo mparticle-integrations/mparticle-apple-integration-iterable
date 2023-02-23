@@ -25,7 +25,7 @@
 + (void)setCustomConfig:(IterableConfig *_Nullable)config;
 
 /**
- * Declare whether or not to prefer user id in API calls to Iterable. If `TRUE`, the kit will not
+ * Declare whether or not to prefer user id in API calls to Iterable. If `YES`, the kit will not
  * set an email or create a placeholder.email address
  */
 + (void)setPrefersUserId:(BOOL)prefers;
