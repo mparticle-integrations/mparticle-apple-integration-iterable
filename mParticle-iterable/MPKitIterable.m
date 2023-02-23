@@ -13,6 +13,7 @@
 static __strong IterableConfig *_customConfig = nil;
 static __strong id <IterableURLDelegate> _customUrlDelegate = nil;
 static __strong NSURL *_clickedURL = nil;
+static BOOL _prefersUserId = NO;
 
 + (NSNumber *)kitCode {
     return @1003;
@@ -26,6 +27,14 @@ static __strong NSURL *_clickedURL = nil;
 + (void)setCustomConfig:(IterableConfig *_Nullable)config {
     _customConfig = config;
     _customUrlDelegate = config.urlDelegate;
+}
+
++ (BOOL)prefersUserId {
+    return _prefersUserId;
+}
+
++ (void)setPrefersUserId:(BOOL)prefers {
+    _prefersUserId = prefers;
 }
 
 - (BOOL)handleIterableURL:(NSURL *)url context:(IterableActionContext *)context {
@@ -148,39 +157,47 @@ static __strong NSURL *_clickedURL = nil;
     return [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
 }
 
-- (NSString *)getPlaceholderEmail:(FilteredMParticleUser *)user {
-    NSString *id = nil;
+- (NSString *)getUserId:(FilteredMParticleUser *)user {
+    NSString *userId = nil;
     if (self.mpidEnabled) {
         if (user.userId.longValue != 0) {
-            id = user.userId.stringValue;
+            userId = user.userId.stringValue;
         }
     } else {
-        id = [[[[UIDevice currentDevice] identifierForVendor] UUIDString] lowercaseString];
-
-        if (!id.length) {
-            id = [[self advertiserId] lowercaseString];
+        userId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString] lowercaseString];
+        
+        if (!userId.length) {
+            userId = [[self advertiserId] lowercaseString];
         }
-
-        if (!id.length) {
-            id = [self getCustomerId:user];
+        
+        if (!userId.length) {
+            userId = [self getCustomerId:user];
         }
-
-        if (!id.length) {
-            id = [[[MParticle sharedInstance] identity] deviceApplicationStamp];
+        
+        if (!userId.length) {
+            userId = [[[MParticle sharedInstance] identity] deviceApplicationStamp];
         }
     }
+    return userId;
+}
 
-    if (id.length > 0) {
-        return [NSString stringWithFormat:@"%@@placeholder.email", id];
+- (NSString *)getPlaceholderEmail:(NSString *)userId {
+    if (userId.length > 0) {
+        return [NSString stringWithFormat:@"%@@placeholder.email", userId];
     } else {
         return nil;
     }
 }
 
 - (void)updateIdentity:(FilteredMParticleUser *)user {
+    NSString *userId = [self getUserId:user];
+    if (_prefersUserId) {
+        [IterableAPI setUserId:userId];
+        return;
+    }
+    
     NSString *email = [self getUserEmail:user];
-    NSString *placeholderEmail = [self getPlaceholderEmail:user];
-
+    NSString *placeholderEmail = [self getPlaceholderEmail:userId];
     if (email != nil && email.length > 0) {
         [IterableAPI setEmail:email];
     } else if (placeholderEmail != nil && placeholderEmail.length > 0) {
