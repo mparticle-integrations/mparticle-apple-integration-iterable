@@ -7,13 +7,13 @@ This repository contains the [Iterable](https://iterable.com) integration for th
 1. Add the kit dependency to your app's Podfile or Cartfile:
 
     ```
-    pod 'mParticle-Iterable', '~> 8.1.0'
+    pod 'mParticle-Iterable', '~> 8'
     ```
 
     OR
 
     ```
-    github "mparticle-integrations/mparticle-apple-integration-iterable" ~> 8.1.0
+    github "mparticle-integrations/mparticle-apple-integration-iterable" ~> 8.0
     ```
 
     Carthage Note: Due to Carthage limitations with the Iterable SDK project, make sure to use the `--use-xcframeworks --no-use-binaries` flags when running `carthage update`.
