@@ -30,9 +30,6 @@ module.exports = {
         "@semantic-release/github",
         {
           assets: [
-            "mParticle_Iterable.framework.zip",
-            "mParticle_Iterable.xcframework.zip",
-            "generated-docs.zip",
           ],
         },
       ],
