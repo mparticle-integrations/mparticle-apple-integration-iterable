@@ -1,6 +1,8 @@
 #import "MPKitIterable.h"
+#import "IterableMPHelper.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
+
 @import IterableSDK;
 
 

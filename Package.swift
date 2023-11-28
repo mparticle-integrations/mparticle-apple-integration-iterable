@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "mParticle-Iterable",
     platforms: [
-        .iOS(.v11),
+        .iOS(.v10),
     ],
     products: [
         .library(
@@ -17,7 +17,7 @@ let package = Package(
         .package(name: "mParticle-Apple-SDK",
                  url: "https://github.com/mParticle/mparticle-apple-sdk",
                  .upToNextMajor(from: "8.0.0")),
-        .package(name: "Iterable-iOS-SDK",
+        .package(name: "IterableSDK",
                  url: "https://github.com/Iterable/swift-sdk.git",
                  .upToNextMajor(from: "6.2.0")),
     ],
@@ -26,10 +26,11 @@ let package = Package(
             name: "mParticle-Iterable",
             dependencies: [
                 .product(name: "mParticle-Apple-SDK", package: "mParticle-Apple-SDK"),
-                .product(name: "IterableSDK", package: "Iterable-iOS-SDK"),
+                .product(name: "IterableSDK", package: "IterableSDK"),
             ],
-            path: "mParticle-iterable",
-            exclude: ["Info.plist"]
+            path: "mParticle-Iterable",
+            exclude: ["Info.plist"],
+            publicHeadersPath: "."
         ),
     ]
 )
