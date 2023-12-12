@@ -104,7 +104,7 @@ import IterableSDK
                     self.started = true
                     
                     DispatchQueue.main.async {
-                        let userInfo = [mParticleKitInstanceKey: type(of: self).kitCode]
+                        let userInfo = [mParticleKitInstanceKey: MPKitIterable.kitCode()]
                         
                         NotificationCenter.default.post(name: NSNotification.Name(NSNotification.Name.mParticleKitDidBecomeActive.rawValue),
                                                         object: nil,
@@ -141,24 +141,24 @@ import IterableSDK
         
         func onLoginComplete(_ user: FilteredMParticleUser, request: FilteredMPIdentityApiRequest) -> MPKitExecStatus {
             updateIdentity(user)
-            return MPKitExecStatus(sdkCode: type(of: self).kitCode(), returnCode: .success)
+            return MPKitExecStatus(sdkCode: MPKitIterable.kitCode(), returnCode: .success)
         }
         
         func onLogoutComplete(_ user: FilteredMParticleUser, request: FilteredMPIdentityApiRequest) -> MPKitExecStatus {
             updateIdentity(user)
-            return MPKitExecStatus(sdkCode: type(of: self).kitCode(), returnCode: .success)
+            return MPKitExecStatus(sdkCode: MPKitIterable.kitCode(), returnCode: .success)
         }
         
         func onIdentifyComplete(_ user: FilteredMParticleUser, request: FilteredMPIdentityApiRequest) -> MPKitExecStatus {
             updateIdentity(user)
-            return MPKitExecStatus(sdkCode: type(of: self).kitCode(), returnCode: .success)
+            return MPKitExecStatus(sdkCode: MPKitIterable.kitCode(), returnCode: .success)
         }
         
         func getUserId(_ user: FilteredMParticleUser) -> String? {
             var userId: String? = nil
             if mpidEnabled {
-                if user.userId.intValue != 0 {
-                    userId = String(user.userId.intValue)
+                if user.userId != 0 {
+                    userId = user.userId.stringValue
                 }
             } else {
                 userId = UIDevice.current.identifierForVendor?.uuidString.lowercased()
@@ -210,20 +210,20 @@ import IterableSDK
         
         func setDeviceToken(_ deviceToken: Data) -> MPKitExecStatus {
             IterableAPI.register(token: deviceToken)
-            return MPKitExecStatus(sdkCode: type(of: self).kitCode(), returnCode: .success)
+            return MPKitExecStatus(sdkCode: MPKitIterable.kitCode(), returnCode: .success)
         }
         
 #if os(iOS)
         @available(iOS 10.0, *)
         func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) -> MPKitExecStatus {
             IterableAppIntegration.userNotificationCenter(center, didReceive: response, withCompletionHandler: {})
-            return MPKitExecStatus(sdkCode: type(of: self).kitCode(), returnCode: .success)
+            return MPKitExecStatus(sdkCode: MPKitIterable.kitCode(), returnCode: .success)
         }
 #endif
         
         func receivedUserNotification(_ userInfo: [AnyHashable: Any]) -> MPKitExecStatus {
             IterableAppIntegration.application(UIApplication.shared, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: { _ in })
-            return MPKitExecStatus(sdkCode: type(of: self).kitCode(), returnCode: .success)
+            return MPKitExecStatus(sdkCode: MPKitIterable.kitCode(), returnCode: .success)
         }
         
         // MARK: - Accessors
