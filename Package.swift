@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "mParticle-Appboy",
+    name: "mParticle-Iterable",
     platforms: [ .iOS(.v11) ],
     products: [
         .library(
@@ -27,7 +27,7 @@ let package = Package(
               .product(name: "IterableSDK", package: "IterableSDK"),
             ],
             path: "mParticle-Iterable",
-            exclude: ["Info.plist"],
+            exclude: ["Info.plist", "mParticle_Iterable.h"],
             publicHeadersPath: "."
         ),
     ]
