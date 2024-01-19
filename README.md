@@ -4,7 +4,7 @@ This repository contains the [Iterable](https://iterable.com) integration for th
 
 ### Adding the integration
 
-1. Add the kit dependency to your app's Podfile or Cartfile:
+1. Add the kit dependency to your app's Podfile or Cartfile, or add using SPM:
 
     ```
     pod 'mParticle-Iterable', '~> 8'
@@ -17,6 +17,14 @@ This repository contains the [Iterable](https://iterable.com) integration for th
     ```
 
     Carthage Note: Due to Carthage limitations with the Iterable SDK project, make sure to use the `--use-xcframeworks --no-use-binaries` flags when running `carthage update`.
+
+    OR
+
+    ```
+    https://github.com/mparticle-integrations/mparticle-apple-integration-iterable
+    ```
+
+    Add as a standard SPM package.
 
 2. Follow the mParticle iOS SDK [quick-start](https://github.com/mParticle/mparticle-apple-sdk), then rebuild and launch your app, and verify that you see `"Included kits: { Iterable }"` in your Xcode console 
 
