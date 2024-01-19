@@ -27,7 +27,7 @@ let package = Package(
               .product(name: "IterableSDK", package: "IterableSDK"),
             ],
             path: "mParticle-Iterable",
-            exclude: ["Info.plist", "mParticle_Iterable.h"],
+            exclude: ["Info.plist"],
             publicHeadersPath: "."
         ),
     ]
