@@ -4,7 +4,7 @@ This repository contains the [Iterable](https://iterable.com) integration for th
 
 ### Adding the integration
 
-1. Add the kit dependency to your app's Podfile or Cartfile:
+1. Add the kit dependency to your app's Podfile or Cartfile, or add using SPM:
 
     ```
     pod 'mParticle-Iterable', '~> 8'
