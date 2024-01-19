@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = "mParticle-Iterable"
-    s.version          = "8.3.0"
+    s.version          = "8.4.0"
     s.summary          = "Iterable integration for mParticle"
 
     s.description      = "This is the Iterable integration for mParticle."
