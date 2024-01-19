@@ -22,12 +22,13 @@ let package = Package(
     targets: [
         .target(
             name: "mParticle-Iterable",
-            path: "mParticle-Iterable",
-            exclude: ["Info.plist"],
             dependencies: [
               .product(name: "mParticle-Apple-SDK", package: "mParticle-Apple-SDK"),
               .product(name: "IterableSDK", package: "IterableSDK"),
-            ]
+            ],
+            path: "mParticle-Iterable",
+            exclude: ["Info.plist"],
+            publicHeadersPath: "."
         ),
     ]
 )
