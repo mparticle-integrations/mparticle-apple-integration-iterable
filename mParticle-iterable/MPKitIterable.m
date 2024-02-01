@@ -90,6 +90,7 @@ static BOOL _prefersUserId = NO;
         NSString *apnsProdIntegrationName = self.configuration[@"apnsProdIntegrationName"];
         NSString *apnsSandboxIntegrationName = self.configuration[@"apnsSandboxIntegrationName"];
         NSString *userIdField = self.configuration[@"userIdField"];
+        NSString *dataRegion = self.configuration[@"dataRegion"];
         self.mpidEnabled = [userIdField isEqualToString:@"mpid"];
 
         IterableConfig *config = _customConfig;
@@ -98,6 +99,7 @@ static BOOL _prefersUserId = NO;
         }
         config.pushIntegrationName = apnsProdIntegrationName;
         config.sandboxPushIntegrationName = apnsSandboxIntegrationName;
+        config.dataRegion = dataRegion;
         config.urlDelegate = self;
         
         [IterableAPI initializeWithApiKey:apiKey config:config];
