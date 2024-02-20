@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
     s.social_media_url = "https://twitter.com/mparticle"
 
     s.ios.deployment_target = "11.0"
-    s.ios.source_files      = 'mParticle-Iterable/*.{h,m,mm}'
+    s.ios.source_files      = 'mParticle-Iterable/*.{h,m,mm,swift}'
     s.ios.dependency 'mParticle-Apple-SDK/mParticle', '~> 8.0'
     s.ios.dependency 'Iterable-iOS-SDK', '~> 6.4'
 end

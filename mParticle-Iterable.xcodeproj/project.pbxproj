@@ -3,28 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		535CF23F285CD8D60043F267 /* mParticle_Apple_SDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 535CF23D285CD8D60043F267 /* mParticle_Apple_SDK.xcframework */; };
-		535CF242285CDCB10043F267 /* IterableSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 535CF241285CDCB10043F267 /* IterableSDK.xcframework */; };
 		DB7E05A61CB819D300967FDF /* MPKitIterable.h in Headers */ = {isa = PBXBuildFile; fileRef = DB7E05A41CB819D300967FDF /* MPKitIterable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB7E05A71CB819D300967FDF /* MPKitIterable.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7E05A51CB819D300967FDF /* MPKitIterable.m */; };
 		DB9401701CB703F2007ABB18 /* mParticle_Iterable.h in Headers */ = {isa = PBXBuildFile; fileRef = DB94016F1CB703F2007ABB18 /* mParticle_Iterable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB96D2AA1F61AA6200D2289F /* IterableMPHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = DB96D2A81F61AA6200D2289F /* IterableMPHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB96D2AB1F61AA6200D2289F /* IterableMPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DB96D2A91F61AA6200D2289F /* IterableMPHelper.m */; };
+		E9ABED382B15EB39007A291E /* mParticle-Apple-SDK in Frameworks */ = {isa = PBXBuildFile; productRef = E9ABED372B15EB39007A291E /* mParticle-Apple-SDK */; };
+		E9ABED3B2B15EB44007A291E /* IterableSDK in Frameworks */ = {isa = PBXBuildFile; productRef = E9ABED3A2B15EB44007A291E /* IterableSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		535CF23D285CD8D60043F267 /* mParticle_Apple_SDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = mParticle_Apple_SDK.xcframework; path = Carthage/Build/mParticle_Apple_SDK.xcframework; sourceTree = "<group>"; };
-		535CF241285CDCB10043F267 /* IterableSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IterableSDK.xcframework; path = Carthage/Build/IterableSDK.xcframework; sourceTree = "<group>"; };
 		DB7E05A41CB819D300967FDF /* MPKitIterable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPKitIterable.h; sourceTree = "<group>"; };
 		DB7E05A51CB819D300967FDF /* MPKitIterable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPKitIterable.m; sourceTree = "<group>"; };
 		DB94016C1CB703F2007ABB18 /* mParticle_Iterable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = mParticle_Iterable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB94016F1CB703F2007ABB18 /* mParticle_Iterable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mParticle_Iterable.h; sourceTree = "<group>"; };
 		DB9401711CB703F2007ABB18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DB96D2A81F61AA6200D2289F /* IterableMPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IterableMPHelper.h; path = "mParticle-iterable/IterableMPHelper.h"; sourceTree = SOURCE_ROOT; };
+		DB96D2A81F61AA6200D2289F /* IterableMPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IterableMPHelper.h; path = "mParticle-Iterable/IterableMPHelper.h"; sourceTree = SOURCE_ROOT; };
 		DB96D2A91F61AA6200D2289F /* IterableMPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IterableMPHelper.m; path = "mParticle-iterable/IterableMPHelper.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -33,8 +31,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				535CF242285CDCB10043F267 /* IterableSDK.xcframework in Frameworks */,
-				535CF23F285CD8D60043F267 /* mParticle_Apple_SDK.xcframework in Frameworks */,
+				E9ABED382B15EB39007A291E /* mParticle-Apple-SDK in Frameworks */,
+				E9ABED3B2B15EB44007A291E /* IterableSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,8 +42,6 @@
 		DB9401621CB703F2007ABB18 = {
 			isa = PBXGroup;
 			children = (
-				535CF241285CDCB10043F267 /* IterableSDK.xcframework */,
-				535CF23D285CD8D60043F267 /* mParticle_Apple_SDK.xcframework */,
 				DB94016E1CB703F2007ABB18 /* mParticle-Iterable */,
 				DB94016D1CB703F2007ABB18 /* Products */,
 			);
@@ -62,11 +58,11 @@
 		DB94016E1CB703F2007ABB18 /* mParticle-Iterable */ = {
 			isa = PBXGroup;
 			children = (
-				DB96D2A81F61AA6200D2289F /* IterableMPHelper.h */,
 				DB96D2A91F61AA6200D2289F /* IterableMPHelper.m */,
+				DB94016F1CB703F2007ABB18 /* mParticle_Iterable.h */,
+				DB96D2A81F61AA6200D2289F /* IterableMPHelper.h */,
 				DB7E05A41CB819D300967FDF /* MPKitIterable.h */,
 				DB7E05A51CB819D300967FDF /* MPKitIterable.m */,
-				DB94016F1CB703F2007ABB18 /* mParticle_Iterable.h */,
 				DB9401711CB703F2007ABB18 /* Info.plist */,
 			);
 			path = "mParticle-Iterable";
@@ -102,6 +98,10 @@
 			dependencies = (
 			);
 			name = "mParticle-Iterable";
+			packageProductDependencies = (
+				E9ABED372B15EB39007A291E /* mParticle-Apple-SDK */,
+				E9ABED3A2B15EB44007A291E /* IterableSDK */,
+			);
 			productName = "mParticle-Iterable";
 			productReference = DB94016C1CB703F2007ABB18 /* mParticle_Iterable.framework */;
 			productType = "com.apple.product-type.framework";
@@ -118,6 +118,7 @@
 					DB94016B1CB703F2007ABB18 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = Q948K5LXGZ;
+						LastSwiftMigration = 1500;
 					};
 				};
 			};
@@ -130,6 +131,10 @@
 				en,
 			);
 			mainGroup = DB9401621CB703F2007ABB18;
+			packageReferences = (
+				E9ABED362B15EB39007A291E /* XCRemoteSwiftPackageReference "mparticle-apple-sdk" */,
+				E9ABED392B15EB44007A291E /* XCRemoteSwiftPackageReference "swift-sdk" */,
+			);
 			productRefGroup = DB94016D1CB703F2007ABB18 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -256,6 +261,7 @@
 		DB9401751CB703F2007ABB18 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -275,12 +281,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mparticle.mParticle-Iterable";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		DB9401761CB703F2007ABB18 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -300,6 +309,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mparticle.mParticle-Iterable";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -325,6 +335,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E9ABED362B15EB39007A291E /* XCRemoteSwiftPackageReference "mparticle-apple-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mParticle/mparticle-apple-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.4.0;
+			};
+		};
+		E9ABED392B15EB44007A291E /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Iterable/swift-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.4.16;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E9ABED372B15EB39007A291E /* mParticle-Apple-SDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E9ABED362B15EB39007A291E /* XCRemoteSwiftPackageReference "mparticle-apple-sdk" */;
+			productName = "mParticle-Apple-SDK";
+		};
+		E9ABED3A2B15EB44007A291E /* IterableSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E9ABED392B15EB44007A291E /* XCRemoteSwiftPackageReference "swift-sdk" */;
+			productName = IterableSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DB9401631CB703F2007ABB18 /* Project object */;
 }
