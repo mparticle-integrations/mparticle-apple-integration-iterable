@@ -17,7 +17,7 @@ let package = Package(
                .upToNextMajor(from: "8.0.0")),
       .package(name: "IterableSDK",
                url: "https://github.com/Iterable/swift-sdk",
-               .upToNextMajor(from: "6.4.0")),
+               .upToNextMajor(from: "6.5.1")),
     ],
     targets: [
         .target(

@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		535CF23F285CD8D60043F267 /* mParticle_Apple_SDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 535CF23D285CD8D60043F267 /* mParticle_Apple_SDK.xcframework */; };
 		535CF242285CDCB10043F267 /* IterableSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 535CF241285CDCB10043F267 /* IterableSDK.xcframework */; };
+		537288DF2BBC531B005E99F3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 537288DE2BBC531B005E99F3 /* PrivacyInfo.xcprivacy */; };
 		DB7E05A61CB819D300967FDF /* MPKitIterable.h in Headers */ = {isa = PBXBuildFile; fileRef = DB7E05A41CB819D300967FDF /* MPKitIterable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB7E05A71CB819D300967FDF /* MPKitIterable.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7E05A51CB819D300967FDF /* MPKitIterable.m */; };
 		DB9401701CB703F2007ABB18 /* mParticle_Iterable.h in Headers */ = {isa = PBXBuildFile; fileRef = DB94016F1CB703F2007ABB18 /* mParticle_Iterable.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		535CF23D285CD8D60043F267 /* mParticle_Apple_SDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = mParticle_Apple_SDK.xcframework; path = Carthage/Build/mParticle_Apple_SDK.xcframework; sourceTree = "<group>"; };
 		535CF241285CDCB10043F267 /* IterableSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IterableSDK.xcframework; path = Carthage/Build/IterableSDK.xcframework; sourceTree = "<group>"; };
+		537288DE2BBC531B005E99F3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		DB7E05A41CB819D300967FDF /* MPKitIterable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPKitIterable.h; sourceTree = "<group>"; };
 		DB7E05A51CB819D300967FDF /* MPKitIterable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPKitIterable.m; sourceTree = "<group>"; };
 		DB94016C1CB703F2007ABB18 /* mParticle_Iterable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = mParticle_Iterable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,7 @@
 				DB7E05A41CB819D300967FDF /* MPKitIterable.h */,
 				DB7E05A51CB819D300967FDF /* MPKitIterable.m */,
 				DB94016F1CB703F2007ABB18 /* mParticle_Iterable.h */,
+				537288DE2BBC531B005E99F3 /* PrivacyInfo.xcprivacy */,
 				DB9401711CB703F2007ABB18 /* Info.plist */,
 			);
 			path = "mParticle-Iterable";
@@ -144,6 +147,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				537288DF2BBC531B005E99F3 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
