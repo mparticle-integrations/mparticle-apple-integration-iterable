@@ -1,3 +1,10 @@
+# [8.6.0](https://github.com/mparticle-integrations/mparticle-apple-integration-iterable/compare/v8.5.0...v8.6.0) (2024-04-29)
+
+
+### Features
+
+* Improve Privacy Manifest support for iOS 17 ([#19](https://github.com/mparticle-integrations/mparticle-apple-integration-iterable/issues/19)) ([e6235c3](https://github.com/mparticle-integrations/mparticle-apple-integration-iterable/commit/e6235c340d13b29844b4d429cd5a039038f55766))
+
 # [8.5.0](https://github.com/mparticle-integrations/mparticle-apple-integration-iterable/compare/v8.4.0...v8.5.0) (2024-04-02)
 
 
