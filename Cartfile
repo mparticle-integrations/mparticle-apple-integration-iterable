@@ -1,2 +1,2 @@
-github "Iterable/swift-sdk" ~> 6.5.1
-github "mparticle/mparticle-apple-sdk" ~> 8.0
+github "Iterable/swift-sdk" ~> 6.5.2
+github "mparticle/mparticle-apple-sdk" ~> 8.19

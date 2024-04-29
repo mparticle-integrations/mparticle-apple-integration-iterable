@@ -14,20 +14,21 @@ let package = Package(
     dependencies: [
       .package(name: "mParticle-Apple-SDK",
                url: "https://github.com/mParticle/mparticle-apple-sdk",
-               .upToNextMajor(from: "8.0.0")),
+               .upToNextMajor(from: "8.19.0")),
       .package(name: "IterableSDK",
                url: "https://github.com/Iterable/swift-sdk",
-               .upToNextMajor(from: "6.5.1")),
+               .upToNextMajor(from: "6.5.2")),
     ],
     targets: [
         .target(
             name: "mParticle-Iterable",
             dependencies: [
-              .product(name: "mParticle-Apple-SDK", package: "mParticle-Apple-SDK"),
-              .product(name: "IterableSDK", package: "IterableSDK"),
+                .product(name: "mParticle-Apple-SDK", package: "mParticle-Apple-SDK"),
+                .product(name: "IterableSDK", package: "IterableSDK"),
             ],
             path: "mParticle-Iterable",
             exclude: ["Info.plist"],
+            resources: [.process("PrivacyInfo.xcprivacy")],
             publicHeadersPath: "."
         ),
     ]
