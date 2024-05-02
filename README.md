@@ -16,8 +16,6 @@ This repository contains the [Iterable](https://iterable.com) integration for th
     github "mparticle-integrations/mparticle-apple-integration-iterable" ~> 8.0
     ```
 
-    Carthage Note: Due to Carthage limitations with the Iterable SDK project, make sure to use the `--use-xcframeworks --no-use-binaries` flags when running `carthage update`.
-
     OR
 
     ```
