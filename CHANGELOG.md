@@ -1,3 +1,10 @@
+## [8.6.1](https://github.com/mparticle-integrations/mparticle-apple-integration-iterable/compare/v8.6.0...v8.6.1) (2024-05-14)
+
+
+### Bug Fixes
+
+* Update Carthage dependency to use binary ([3de6230](https://github.com/mparticle-integrations/mparticle-apple-integration-iterable/commit/3de62302a19023b596540c09e3ec45c129309bb1))
+
 # [8.6.0](https://github.com/mparticle-integrations/mparticle-apple-integration-iterable/compare/v8.5.0...v8.6.0) (2024-04-29)
 
 
