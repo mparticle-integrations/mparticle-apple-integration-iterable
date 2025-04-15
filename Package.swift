@@ -25,6 +25,7 @@ let package = Package(
             dependencies: [
                 .product(name: "mParticle-Apple-SDK", package: "mParticle-Apple-SDK"),
                 .product(name: "IterableSDK", package: "IterableSDK"),
+                .product(name: "IterableAppExtensions", package: "IterableSDK")
             ],
             path: "mParticle-Iterable",
             exclude: ["Info.plist"],
