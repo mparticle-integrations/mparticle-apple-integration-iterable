@@ -33,7 +33,7 @@ static BOOL _prefersUserId = NO;
 	if ([config isKindOfClass:[IterableConfig class]]) {
 		[self setCustomConfig:(IterableConfig *)config];
 	} else if (config != nil) {
-		NSLog(@"[mParticle-Iterable] Warning: setCustomConfigObject called with an object of type %@, but expected IterableConfig. Ignoring.", NSStringFromClass([config class]));
+		NSLog(@"mParticle -> Error: setCustomConfigObject called with an object of type %@, but expected IterableConfig. Ignoring.", NSStringFromClass([config class]));
 	}
 }
 
