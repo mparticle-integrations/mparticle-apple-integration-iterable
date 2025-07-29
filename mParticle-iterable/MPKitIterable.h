@@ -28,6 +28,11 @@
  * @param config `IterableConfig` instance with configuration data for Iterable SDK
  */
 + (void)setCustomConfig:(IterableConfig *_Nullable)config;
+
+/**
+ * Set a custom config to be used when initializing Iterable SDK. To be used in cases where the compiler cannot resolve the IterableConfig type, such as with Swift Package Manager.
+ * @param config `IterableConfig` instance with configuration data for Iterable SDK
+ */
 + (void)setCustomConfigObject:(id _Nullable)config;
 
 /**
