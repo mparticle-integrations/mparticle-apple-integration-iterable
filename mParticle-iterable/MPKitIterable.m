@@ -29,6 +29,14 @@ static BOOL _prefersUserId = NO;
     _customUrlDelegate = config.urlDelegate;
 }
 
++ (void)setCustomConfigObject:(id _Nullable)config {
+	if ([config isKindOfClass:[IterableConfig class]]) {
+		[self setCustomConfig:(IterableConfig *)config];
+	} else if (config != nil) {
+		NSLog(@"mParticle -> Error: setCustomConfigObject called with an object of type %@, but expected IterableConfig. Ignoring.", NSStringFromClass([config class]));
+	}
+}
+
 + (BOOL)prefersUserId {
     return _prefersUserId;
 }
