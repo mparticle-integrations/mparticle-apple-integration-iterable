@@ -16,9 +16,8 @@ let package = Package(
     name: mpIterable,
     platforms: [ .iOS(.v11) ],
     products: [
-        .library(
-            name: mpIterable,
-            targets: [mpIterable]),
+        .library(name: mpIterable, targets: [mpIterable]),
+        .library(name: mpIterableNoLocation, targets: [mpIterableNoLocation])
     ],
     dependencies: [
       .package(name: mpSDK,
