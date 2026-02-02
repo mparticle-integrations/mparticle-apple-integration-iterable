@@ -6,6 +6,7 @@
 //
 //
 
+#import <Foundation/Foundation.h>
 #ifndef IterableMPHelper_h
 #define IterableMPHelper_h
 
